@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Libre_Barcode_39_Text } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -10,6 +11,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const libreBarcode = Libre_Barcode_39_Text({
+  variable: "--font-libre-barcode-39-text",
+  style: "normal",
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -24,11 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`${libreBarcode.variable} antialiased`}>{children}</body>
     </html>
   );
 }

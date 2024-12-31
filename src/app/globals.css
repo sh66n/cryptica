@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.font-libre-barcode {
+  font-family: var(--font-libre-barcode-39-text), cursive;
+}
