@@ -2,10 +2,29 @@ import PasswordCard from "@/components/PasswordCard";
 import SearchBar from "@/components/SearchBar";
 import Tags from "@/components/Tags";
 import { IPassword } from "@/models/password.model";
+import { Suspense } from "react";
+import Loading from "./loading";
 
-const getData = async () => {
+export const revalidate = 0;
+
+const getData = async ({ query, tags }: URLSearchParams) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/passwords`);
+    let res;
+    if (tags && query) {
+      res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/passwords?tags=${tags}&query=${query}`
+      );
+    } else if (tags) {
+      res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/passwords?tags=${tags}`
+      );
+    } else if (query) {
+      res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/passwords?query=${query}`
+      );
+    } else {
+      res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/passwords`);
+    }
     if (!res.ok) throw new Error(res.statusText);
     const data: IPassword[] = await res.json();
     return data;
@@ -15,16 +34,28 @@ const getData = async () => {
   }
 };
 
-const Passwords = async () => {
-  const passwords: IPassword[] = await getData();
+const Passwords = async ({
+  searchParams,
+}: {
+  searchParams: Promise<URLSearchParams>;
+}) => {
+  const params = await searchParams;
+  const passwords: IPassword[] = await getData(params);
 
   return (
-    <div className="h-screen w-full bg-[#252B2C] p-2">
+    <div className="min-h-screen h-fit w-full bg-[#252B2C] p-2">
       <SearchBar />
       <Tags />
-      {passwords.map((p) => (
-        <PasswordCard password={p} key={p._id} />
-      ))}
+      {params.query && (
+        <div className="mx-48 text-gray-400 text-xl">
+          Search results for "{params.query}"
+        </div>
+      )}
+      <Suspense fallback={<Loading />}>
+        {passwords.map((p) => (
+          <PasswordCard password={p} key={p._id} />
+        ))}
+      </Suspense>
     </div>
   );
 };
