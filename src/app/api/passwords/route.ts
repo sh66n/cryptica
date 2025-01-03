@@ -46,7 +46,6 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
       );
     }
     let body: IPassword = await req.json();
-    console.log(session);
     body.user_id = session.user._id;
     zPassword.parse(body);
     const newPassword = await Password.create(body);

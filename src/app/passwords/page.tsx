@@ -4,6 +4,8 @@ import Tags from "@/components/Tags";
 import { IPassword } from "@/models/password.model";
 import { Suspense } from "react";
 import Loading from "./loading";
+import AddNew from "@/components/AddNew";
+import Link from "next/link";
 
 export const revalidate = 0;
 
@@ -56,6 +58,12 @@ const Passwords = async ({
           <PasswordCard password={p} key={p._id} />
         ))}
       </Suspense>
+      <Link
+        className="fixed h-20 w-20 bottom-10 right-10 rounded-lg flex items-center justify-center p-4 bg-[#37A13E] hover:bg-[#1a5c1e] cursor-pointer"
+        href="/passwords/new"
+      >
+        <AddNew />
+      </Link>
     </div>
   );
 };

@@ -1,7 +1,9 @@
+"use client";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Libre_Barcode_39_Text } from "next/font/google";
 import "./globals.css";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,10 +21,10 @@ const libreBarcode = Libre_Barcode_39_Text({
   weight: "400",
 });
 
-export const metadata: Metadata = {
-  title: "Cryptica",
-  description: "A sleek and clean password-manager",
-};
+// export const metadata: Metadata = {
+//   title: "Cryptica",
+//   description: "A sleek and clean password-manager",
+// };
 
 export default function RootLayout({
   children,
@@ -31,7 +33,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${libreBarcode.variable} antialiased`}>{children}</body>
+      <body className={`${libreBarcode.variable} antialiased`}>
+        {children} <ToastContainer />
+      </body>
     </html>
   );
 }

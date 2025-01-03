@@ -18,7 +18,7 @@ const PasswordCard = ({ password }: { password: IPassword }) => {
       </div>
       <div className="mr-4 w-96 break-words">{password.service_name}</div>
       <div className="ml-auto break-words mr-4 w-96">
-        {isVisible ? password.password : "*".repeat(password.password.length)}
+        {isVisible ? password.password : "*".repeat(password.password?.length)}
       </div>
       <div className="" onClick={handleClick}>
         {isVisible ? <OpenEye /> : <ClosedEyeIcon />}
