@@ -25,7 +25,15 @@ const getData = async ({ query, tags }: URLSearchParams) => {
         `${process.env.NEXT_PUBLIC_API_URL}/api/passwords?query=${query}`
       );
     } else {
-      res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/passwords`);
+      res = await fetch("http://localhost:3000/api/passwords", {
+        method: "GET",
+        credentials: "include", // This is crucial
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const body = await res.json();
+      console.log(body);
     }
     if (!res.ok) throw new Error(res.statusText);
     const data: IPassword[] = await res.json();

@@ -5,7 +5,6 @@ import React from "react";
 
 const Home = async () => {
   const session = await auth();
-  console.log(session);
   return (
     <div>
       {session ? (
@@ -15,7 +14,9 @@ const Home = async () => {
             style={{ backgroundImage: `url(${session.user?.image})` }}
           ></div>
           <Link href="/passwords">My passwords</Link>
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={handleLogout} className="w-fit">
+            Logout
+          </button>
         </div>
       ) : (
         <button>

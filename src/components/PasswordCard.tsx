@@ -5,6 +5,7 @@ import PersonalIcon from "./PersonalIcon";
 import { useState } from "react";
 import OpenEye from "./OpenEyeIcon";
 import ClosedEyeIcon from "./ClosedEyeIcon";
+import Link from "next/link";
 const PasswordCard = ({ password }: { password: IPassword }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -16,7 +17,16 @@ const PasswordCard = ({ password }: { password: IPassword }) => {
       <div className="mr-4">
         {password.tags === "work" ? <WorkIcon /> : <PersonalIcon />}
       </div>
-      <div className="mr-4 w-96 break-words">{password.service_name}</div>
+      {password._id ? (
+        <Link href={`/passwords/${password._id}`} className="w-96 break-words">
+          <div className="mr-4 hover:underline hover:text-[#0084FF]">
+            {password.service_name}
+          </div>
+        </Link>
+      ) : (
+        <div className="mr-4">{password.service_name}</div>
+      )}
+
       <div className="ml-auto break-words mr-4 w-96">
         {isVisible ? password.password : "*".repeat(password.password?.length)}
       </div>
